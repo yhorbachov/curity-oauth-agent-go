@@ -11,12 +11,10 @@ import (
 )
 
 func TestHealthcheck(t *testing.T) {
-	test.WithTestServer(t, func(server *fiber.App) {
-		t.Run("returns 200 OK", func(t *testing.T) {
-			req := httptest.NewRequest("GET", "/healthcheck", nil)
-			resp, _ := server.Test(req)
+	test.Run(t, "returns 200 OK", func(s *fiber.App) {
+		req := httptest.NewRequest("GET", "/healthcheck", nil)
+		resp, _ := s.Test(req)
 
-			assert.Equal(t, http.StatusOK, resp.StatusCode)
-		})
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
 	})
 }

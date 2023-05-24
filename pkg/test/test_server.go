@@ -8,21 +8,22 @@ import (
 	"github.com/yhorbachov/curity-oauth-agent-g/pkg/server"
 )
 
-func WithTestServer(t *testing.T, callback func(server *fiber.App)) {
+func Run(t *testing.T, name string, callback func(s *fiber.App)) {
 	t.Helper()
+	t.Run(name, func(t *testing.T) {
+		config := conf.Config{
+			Port:           0,
+			EndpointsPefix: "",
+		}
 
-	config := conf.Config{
-		Port:           0,
-		EndpointsPefix: "",
-	}
+		s := server.NewServer(config)
 
-	server := server.NewServer(config)
+		callback(s)
 
-	callback(server)
+		if err := s.Shutdown(); err != nil {
+			t.Fatalf("failed to shutdown server: %v", err)
+		}
 
-	if err := server.Shutdown(); err != nil {
-		t.Fatalf("failed to shutdown server: %v", err)
-	}
-
-	server = nil
+		s = nil
+	})
 }

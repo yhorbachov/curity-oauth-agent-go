@@ -12,8 +12,9 @@ func Run(t *testing.T, name string, callback func(s *fiber.App)) {
 	t.Helper()
 	t.Run(name, func(t *testing.T) {
 		config := conf.Config{
-			Port:           0,
-			EndpointsPefix: "",
+			Port:              0,
+			EndpointsPefix:    "",
+			TrustedWebOrigins: []string{"http://vaild-origin.com"},
 		}
 
 		s := server.NewServer(config)

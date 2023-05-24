@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/stretchr/testify/assert"
 	"github.com/yhorbachov/curity-oauth-agent-g/pkg/test"
 )
 
@@ -15,9 +16,7 @@ func TestHealthcheck(t *testing.T) {
 			req := httptest.NewRequest("GET", "/healthcheck", nil)
 			resp, _ := server.Test(req)
 
-			if resp.StatusCode != http.StatusOK {
-				t.Errorf("expected status code %d, got %d", http.StatusOK, resp.StatusCode)
-			}
+			assert.Equal(t, http.StatusOK, resp.StatusCode)
 		})
 	})
 }

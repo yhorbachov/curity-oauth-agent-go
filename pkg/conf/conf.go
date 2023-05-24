@@ -5,8 +5,9 @@ import (
 )
 
 type Config struct {
-	Port           int
-	EndpointsPefix string
+	Port              int
+	EndpointsPefix    string
+	TrustedWebOrigins []string
 }
 
 func NewDefaultConfig() Config {
@@ -18,7 +19,8 @@ func NewDefaultConfig() Config {
 	v.SetDefault("ENDPOINTS_PREFIX", "/oauth-agent")
 
 	return Config{
-		Port:           v.GetInt("PORT"),
-		EndpointsPefix: v.GetString("ENDPOINTS_PREFIX"),
+		Port:              v.GetInt("PORT"),
+		EndpointsPefix:    v.GetString("ENDPOINTS_PREFIX"),
+		TrustedWebOrigins: v.GetStringSlice("TRUSTED_WEB_ORIGINS"),
 	}
 }

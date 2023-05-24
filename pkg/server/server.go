@@ -3,16 +3,17 @@ package server
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/yhorbachov/curity-oauth-agent-g/pkg/conf"
+	"github.com/yhorbachov/curity-oauth-agent-g/pkg/handlers"
 )
 
 func NewServer(config conf.Config) *fiber.App {
 	app := fiber.New()
 
+	app.Get("/healthcheck", handlers.Healthcheck)
+
 	api := app.Group(config.EndpointsPefix)
 
-	api.Get(config.EndpointsPefix+"/health", func(c *fiber.Ctx) error {
-		return c.SendString("OK")
-	})
+	api.Post("/login/start", handlers.LoginStart)
 
 	return app
 }

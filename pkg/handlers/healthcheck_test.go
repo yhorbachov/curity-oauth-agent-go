@@ -11,7 +11,7 @@ import (
 )
 
 func TestHealthcheck(t *testing.T) {
-	test.Run(t, "returns 200 OK", func(s *fiber.App) {
+	test.Run(t, "returns 200 OK", func(t *testing.T, s *fiber.App) {
 		req := httptest.NewRequest("GET", "/healthcheck", nil)
 		resp, _ := s.Test(req)
 
